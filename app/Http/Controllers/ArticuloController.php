@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreArticuloRequest;
-use App\Http\Requests\UpdateArticuloRequest;
 use App\Models\Articulo;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ArticuloController extends Controller
 {
@@ -13,7 +13,9 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        //
+        return view('articulos.index', [
+            'articulos' => Articulo::all(),
+        ]);
     }
 
     /**
@@ -21,15 +23,22 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        //
+        return view('articulos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticuloRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'codigo' => 'required|max_digits:6|unique:articulos,codigo',
+            'denominacion' => 'required|string|max:255',
+            'precio' => 'required|decimal:2',
+        ]);
+        Articulo::create($validated);
+        session()->flash('exito', 'Artículo creado correctamente.');
+        return redirect()->route('articulos.index');
     }
 
     /**
@@ -37,7 +46,9 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        //
+        return view('articulos.show', [
+            'articulo' => $articulo,
+        ]);
     }
 
     /**
@@ -45,15 +56,29 @@ class ArticuloController extends Controller
      */
     public function edit(Articulo $articulo)
     {
-        //
+        return view('articulos.edit', [
+            'articulo' => $articulo,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateArticuloRequest $request, Articulo $articulo)
+    public function update(Request $request, Articulo $articulo)
     {
-        //
+        $validated = $request->validate([
+            'codigo' => [
+                'required',
+                'max_digits:6',
+                Rule::unique('articulos')->ignore($articulo),
+            ],
+            'denominacion' => 'required|string|max:255',
+            'precio' => 'required|decimal:2',
+        ]);
+        $articulo->fill($validated);
+        $articulo->save();
+        session()->flash('exito', 'Artículo modificado correctamente.');
+        return redirect()->route('articulos.index');
     }
 
     /**
@@ -61,6 +86,8 @@ class ArticuloController extends Controller
      */
     public function destroy(Articulo $articulo)
     {
-        //
+        $articulo->facturas()->detach();
+        $articulo->delete();
+        return redirect()->route('articulos.index');
     }
 }
