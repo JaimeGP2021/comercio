@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreFacturaRequest;
-use App\Http\Requests\UpdateFacturaRequest;
+use App\Models\Articulo;
 use App\Models\Factura;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FacturaController extends Controller
 {
@@ -13,7 +15,10 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        //
+        return view('facturas.index', [
+            'facturas'=>Factura::all(),
+            'usuarios'=>User::all(),
+        ]);
     }
 
     /**
@@ -21,15 +26,26 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        //
+        return view('facturas.create', [
+            'articulos'=>Articulo::all(),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFacturaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->merge(['user_id' => Auth::user()->id]);
+        $validated = $request->validate([
+            'numero' => 'required|max_digits:9',
+        ]);
+        $factura = Factura::create($validated);
+        foreach ($request->articulos as $articulo) {
+            $factura->articulos()->attach($articulo);
+        }
+        session()->flash('exito', 'Factura creado correctamente.');
+        return redirect()->route('facturas.index');
     }
 
     /**
@@ -51,7 +67,7 @@ class FacturaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFacturaRequest $request, Factura $factura)
+    public function update(Request $request, Factura $factura)
     {
         //
     }
