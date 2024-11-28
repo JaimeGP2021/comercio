@@ -39,7 +39,7 @@
                                             </a>
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $factura->user()->name }} €
+                                            {{ $factura->user->name }}
                                         </td>
                                         <td class="px-6 py-4 flex items-center">
                                             <a href="{{ route('facturas.edit', $factura) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>

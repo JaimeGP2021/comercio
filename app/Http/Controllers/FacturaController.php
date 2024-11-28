@@ -7,6 +7,7 @@ use App\Models\Factura;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FacturaController extends Controller
 {
@@ -36,14 +37,19 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge(['user_id' => Auth::user()->id]);
-        $validated = $request->validate([
-            'numero' => 'required|max_digits:9',
+        $factura=DB::table('facturas');
+
+        $factura->insert([
+            'numero'=> $request->numero,
+            'user_id'=> Auth::id(),
+            'created_at'=>now(),
+            'updated_at'=>now(),
         ]);
-        $factura = Factura::create($validated);
-        foreach ($request->articulos as $articulo) {
-            $factura->articulos()->attach($articulo);
-        }
+
+        dd();
+        // foreach ($request->articulos as $articulo) {
+        // $factura->articulos()->attach($articulo->id);
+        // }
         session()->flash('exito', 'Factura creado correctamente.');
         return redirect()->route('facturas.index');
     }

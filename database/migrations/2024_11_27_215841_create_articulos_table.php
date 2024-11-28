@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('codigo')->unique();
             $table->string('denominacion', 255);
             $table->decimal('precio', 6, 2);
+            $table->timestamps();
         });
     }
 
