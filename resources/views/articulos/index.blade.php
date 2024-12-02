@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-6 flex">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -17,7 +17,7 @@
                                         Código
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Denominación
+                                        Descripción
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Precio
@@ -68,6 +68,11 @@
             </div>
         </div>
 
+        @if (!$carrito->vacio())
+            <aside class="flex flex-col w-1/4">
+
+            </aside>
+        @endif
 
     </div>
 </x-app-layout>
