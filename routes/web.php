@@ -6,6 +6,7 @@ use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Articulo;
 use App\Models\Factura;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -47,10 +48,18 @@ Route::get('/carrito/vaciar', function () {
 })->name('carrito.vaciar');
 
 Route::post('/comprar', function () {
+    return redirect()->route('facturas.create');
+})->middleware('auth')->name('comprar');
+
+Route::post('/realizar_compra', function (Request $request) {
+    $validated = $request->validate([
+        'numero' => 'required|integer|unique:facturas,numero'
+    ]);
+
     $carrito = Carrito::carrito();
     DB::beginTransaction();
     $factura = new Factura();
-    $factura->numero = 300;  //Este número debe ser introducido a mano por el usuario
+    $factura->numero = $validated['numero'];
     $factura->user()->associate(Auth::user());
     $factura->save();
     $attachs = [];
@@ -60,7 +69,7 @@ Route::post('/comprar', function () {
     $factura->articulos()->attach($attachs);
     DB::commit();
     session()->forget('carrito');
-    return redirect()->route('articulos.index');
-})->middleware('auth')->name('comprar');
+    return redirect()->route('facturas.index');
+})->middleware('auth')->name('realizar_compra');
 
 require __DIR__.'/auth.php';

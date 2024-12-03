@@ -12,8 +12,6 @@ class Factura extends Model
 
     protected $fillable = [
         'numero',
-        'denominacion',
-        'precio',
     ];
 
     public function user()

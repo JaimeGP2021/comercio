@@ -37,19 +37,6 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        $factura=DB::table('facturas');
-
-        $factura->insert([
-            'numero'=> $request->numero,
-            'user_id'=> Auth::id(),
-            'created_at'=>now(),
-            'updated_at'=>now(),
-        ]);
-
-        dd();
-        // foreach ($request->articulos as $articulo) {
-        // $factura->articulos()->attach($articulo->id);
-        // }
         session()->flash('exito', 'Factura creado correctamente.');
         return redirect()->route('facturas.index');
     }
@@ -83,6 +70,8 @@ class FacturaController extends Controller
      */
     public function destroy(Factura $factura)
     {
-        //
+        $factura->articulos()->detach();
+        $factura->delete();
+        return redirect()->route('facturas.index');
     }
 }

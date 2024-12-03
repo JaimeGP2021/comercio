@@ -31,18 +31,18 @@
                                 @foreach ($facturas as $factura)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $factura->numero }}
+                                            <a href="{{ route('facturas.show', $factura) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                                {{ $factura->numero }}
+                                            </a>
                                         </th>
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('facturas.show', $factura) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                                 {{ $factura->created_at }}
-                                            </a>
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $factura->user->name }}
                                         </td>
                                         <td class="px-6 py-4 flex items-center">
-                                            <a href="{{ route('facturas.edit', $factura) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                            {{-- <a href="{{ route('facturas.edit', $factura) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a> --}}
                                             <form method="POST" action="{{ route('facturas.destroy', $factura) }}">
                                                 @method('DELETE')
                                                 @csrf
@@ -58,11 +58,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-6 text-center">
-                        <a href="{{ route('facturas.create') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            Crear una nueva factura
-                        </a>
-                    </div>
+                    {{-- <div class="mt-6 text-center"> --}}
+                        {{-- <a href="{{ route('facturas.create') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> --}}
+                            {{-- Crear una nueva factura --}}
+                        {{-- </a> --}}
+                    {{-- </div> --}}
 
                 </div>
             </div>
