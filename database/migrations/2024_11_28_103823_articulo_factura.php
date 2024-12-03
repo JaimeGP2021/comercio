@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('articulo_factura', function (Blueprint $table) {
-            $table->foreignId('factura_id')->constrained();
             $table->foreignId('articulo_id')->constrained();
+            $table->foreignId('factura_id')->constrained();
+            $table->integer('cantidad')->default(1);
             $table->primary(['factura_id', 'articulo_id']);
         });
     }

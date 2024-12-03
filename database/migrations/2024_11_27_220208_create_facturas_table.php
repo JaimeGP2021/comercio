@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
-            $table->integer('numero')->unique();
-            $table->timestamps();
+            $table->decimal('8, 0')->unique();
             $table->foreignId('user_id')->constrained;
+            $table->timestamps();
+            $table->index('user_id');
         });
     }
 

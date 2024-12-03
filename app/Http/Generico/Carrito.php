@@ -44,7 +44,7 @@ class Carrito
 
     public function getLineas()
     {
-        return $this->
+        return $this->lineas;
     }
 
     public function vacio(): bool
@@ -57,6 +57,9 @@ class Carrito
         if (session()->missing('carrito')) {
             session()->put('carrito', new static());
         }
+
+        // session('carrito')->meter(1);
+        // session()->forget('carrito');
 
         return session('carrito');
     }
