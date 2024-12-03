@@ -31,7 +31,7 @@
                                 Precio
                             </dt>
                             <dd class="text-lg font-semibold">
-                                {{ $articulo->precio }}€
+                                {{ $articulo->precio }} €
                             </dd>
                         </div>
                     </dl>

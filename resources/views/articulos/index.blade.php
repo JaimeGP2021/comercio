@@ -20,7 +20,7 @@
                                             Código
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Descripción
+                                            Denominación
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Precio
@@ -42,11 +42,11 @@
                                             <td class="px-6 py-4">
                                                 <a href="{{ route('articulos.show', $articulo) }}"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                                    {{ $articulo->descripcion }}
+                                                    {{ $articulo->denominacion }}
                                                 </a>
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $articulo->precio }}
+                                                {{ $articulo->precio }} €
                                             </td>
                                             <td class="px-6 py-4 flex items-center gap-2">
                                                 <a href="{{ route('articulos.edit', $articulo) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
@@ -85,7 +85,7 @@
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <th scope="col" class="py-3 px-6">
-                                        Descripción
+                                        Denominación
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Cantidad
@@ -99,7 +99,7 @@
                                         @endphp
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td class="py-4 px-6">
-                                                {{ $articulo->descripcion }}
+                                                {{ $articulo->denominacion }}
                                             </td>
                                             <td class="py-4 px-6 text-center">
                                                 {{ $cantidad }}

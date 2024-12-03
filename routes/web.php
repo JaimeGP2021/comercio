@@ -50,10 +50,9 @@ Route::post('/comprar', function () {
     $carrito = Carrito::carrito();
     DB::beginTransaction();
     $factura = new Factura();
-    $factura->numero = 100;
+    $factura->numero = 300;  //Este número debe ser introducido a mano por el usuario
     $factura->user()->associate(Auth::user());
     $factura->save();
-    // die();
     $attachs = [];
     foreach ($carrito->getLineas() as $articulo_id => $linea) {
         $attachs[$articulo_id] = ['cantidad' => $linea->getCantidad()];
