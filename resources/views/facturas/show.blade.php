@@ -38,11 +38,13 @@
                     <br>
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Compra:</h2>
                     <ol class="max-w-md space-y-1 text-gray-500 list-decimal list-inside dark:text-gray-400">
+                        @foreach ($factura->articulos as $articulo)
                         <li>
-                            <span class="font-semibold text-gray-900 dark:text-white">Bonnie Green</span> --- Precio/unidad:
-                            <span class="font-semibold text-gray-900 dark:text-white">70€</span> --- Cantidad
-                            <span class="font-semibold text-gray-900 dark:text-white">70</span>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{$articulo->denominacion}}</span> --- Precio/unidad:
+                            <span class="font-semibold text-gray-900 dark:text-white">{{$articulo->precio}}€</span> --- Cantidad:
+                            <span class="font-semibold text-gray-900 dark:text-white">{{$articulo->pivot->cantidad}}</span>
                         </li>
+                        @endforeach
                     </ol>
                 </div>
             </div>
