@@ -37,8 +37,7 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        session()->flash('exito', 'Factura creado correctamente.');
-        return redirect()->route('facturas.index');
+        //
     }
 
     /**

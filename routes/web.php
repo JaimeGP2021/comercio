@@ -6,10 +6,10 @@ use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Articulo;
 use App\Models\Factura;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,19 +47,28 @@ Route::get('/carrito/vaciar', function () {
     return redirect()->route('articulos.index');
 })->name('carrito.vaciar');
 
-Route::post('/comprar', function () {
-    return redirect()->route('facturas.create');
-})->middleware('auth')->name('comprar');
+// Route::post('/comprar', function () {
+//     return redirect()->route('realizar_compra');
+// })->middleware('auth')->name('comprar');
 
-Route::post('/realizar_compra', function (Request $request) {
+Route::post('/realizar_compra', function () {
+    $funca = true;
+    while ($funca){
+        $uuid = Str::uuid();
+        if (!(DB::table('facturas')->where('numero', $uuid)->exists())) {
+            $funca = false;
+        }
+    }
+    /*
     $validated = $request->validate([
         'numero' => 'required|integer|unique:facturas,numero'
     ]);
+    */
 
     $carrito = Carrito::carrito();
     DB::beginTransaction();
     $factura = new Factura();
-    $factura->numero = $validated['numero'];
+    $factura->numero = $uuid;
     $factura->user()->associate(Auth::user());
     $factura->save();
     $attachs = [];
